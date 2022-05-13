@@ -6,7 +6,13 @@ module.exports = app => {
 
     router.get("/", propertyController.getAll);
 
-    router.get('/:id', propertyController.getOne)
+    router.get('/:id', propertyController.getOne);
+
+    router.post('/', propertyController.create);
+
+    router.patch('/:id', propertyController.update);
+
+    router.patch('/:id/sold', propertyController.markAsSold)
 
     app.use('/properties', router)
 

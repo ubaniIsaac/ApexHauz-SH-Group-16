@@ -31,3 +31,50 @@ exports.getOne = (req, res) => {
     })
 
 }
+exports.create = (req,res)=>{
+    Property.createProperty(req.body,(err, data)=>{
+        if(err){
+            res.status(400).json({
+                "status": "failed",
+                "msg":"could not create property",
+                
+            })
+            
+        }else{
+            res.json({
+                "status":"success",
+                "data": {...req.body}
+            })
+        }
+    })
+}
+exports.update = (req, res)=>{
+    Property.updateSpecs(Number(req.params.id),req.body,(err, data)=>{
+        if(err){
+            res.status(500).json({
+                "status": "failed",
+                "msg":"could not update property",
+            })
+        }else{
+            res.status(200).json({
+                "status":"success",
+                "data": {...data}
+            })
+        }
+    })
+}
+exports.markAsSold = (req, res) => {
+    Property.markAsSold(Number(req.params.id),(err, data)=>{
+        if(err){
+            res.status(500).json({
+                "status": "failed",
+                "msg":"could not update property",
+            })
+        }else{
+            res.status(200).json({
+                "status":"success",
+                "data": {...data}
+            })
+        }
+    })
+}

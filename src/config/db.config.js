@@ -6,7 +6,11 @@ const db = mysql.createConnection({
     password: process.env.MYSQL_USER_PASSWORD,
     database: process.env.MYSQL_DATABASE
 })
-db.connect()
+db.connect((err)=>{
+    if (err) {throw err};
+
+    console.log('database connected');
+})
 
 // db.query("SELECT 1+1 AS SOLUTION", (err, row, fields) => {
 //     if (err) throw err
