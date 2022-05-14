@@ -7,9 +7,14 @@ module.exports = app => {
 
     //Login
     router.post("/login", userController.login)
+    app.use('/user', router)
+    app.use((err, req, res, next) => {
+        res.status(err.statusCode || 500).send({
+            message: err.message
+        });
+        next();
+    })
 }
 
 
 
-
-module.exports = router;

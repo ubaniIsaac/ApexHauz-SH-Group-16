@@ -1,16 +1,17 @@
 //User Controller
 const bcrypt = require("bcrypt") 
 const jwt = require("jsonwebtoken") 
-
+const User = require("../models/user.model")
+const db = require("../config/db.config")
 
 
 exports.register = (req, res) =>{
-    const {id, email,first_name, last_name, password, phone, address} = req.body
-    if(!id || !email || !first_name|| !last_name|| !password|| !phone|| !address){
+    const {email,first_name, last_name, password, phone, address} = req.body
+    if( !email || !first_name|| !last_name|| !password|| !phone|| !address){
         return res.status(400).json({error:"Content cannot be empty"})
     }
     else{
-        User.query("SELECT email FROM users WHERE email = ?", [email], async(err, result)=>{
+        db.query("SELECT email FROM users WHERE email = ?", [email], async(err, result)=>{
             if(err) throw err;
             if(result[0]) return res.status(400).json({error:"Email has already been used"})
             else{
@@ -32,8 +33,8 @@ exports.register = (req, res) =>{
 
 
 exports.login = (req, res) =>{
-    const {id, email,password} = req.body
-    if(!id || !email || !password){
+    const { email,password} = req.body
+    if(!email || !password){
         return res.status(400).json({status:"error",error:"Content cannot be empty"})
     }
     else{
